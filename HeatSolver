@@ -1,0 +1,29 @@
+import numpy as np
+import math
+import matplotlib.pyplot as plt
+
+#this code is used to calculated the transport of heat in mixed media
+
+dx=0.01
+dt=0.00001
+l=50
+w=50
+alpha=1
+timesteps=100
+temp=np.zeros((l,w))
+update=np.zeros((l,w))
+
+#initialize temperature
+temp[5,5]=10
+
+#iterate the heat equation in time
+for i in range(150):
+	for j in range(1,l-1):
+		for k in range(1,w-1):
+			update[j][k]=(alpha**2*dt/dx**2)*(temp[j+1][k]+temp[j-1][k]+temp[j][k+1]+temp[j][k-1]-4*temp[j][k])
+	temp+=update
+
+fig, ax = plt.subplots()
+# Using matshow here just because it sets the ticks up nicely. imshow is faster
+ax.matshow(temp, cmap='gist_heat')
+plt.show()
